@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTDS Water Meters</title>
+    <style>
+        .card {
+            width: 60%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 50px;
+            margin-bottom: 30px;
+        }
+        .card-header {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .dashboard-container {
+            margin-bottom: 20px;
+            height: 200px;
+            width: 360px;
+            margin-right: 40px;
+        }
+        .dashboard-container iframe {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+            height: 100%;
+        }
+        .wide-dashboard {
+            width: 883px;
+            height: 200px;
+        }
+        .horizontal-container {
+            display: flex;
+        }
+        .horizontal-container .dashboard-container {
+            margin-right: 20px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            text-decoration: none;
+            color: purple;
+            font-weight: 780;
+            font-size: 20px;
+            font-family: Arial;
+        }
+        .back-button.square-button {
+            padding: 5px 10px;
+            background-color: #ffffff;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body style="background-color: #f0f0f0;">
+    <a href="http://127.0.0.1:5000/influx" class="back-button square-button">&#9664;</a>
+    <span style="color: purple; font-weight: 780; font-size: 30px; font-family: Arial; margin-left: 50px;">DTDS</span>
+    <div class="card">
+        <div class="card-header">
+            Water Meter 1
+        </div>
+    
+        <div class="horizontal-container">
+            <div class="dashboard-container">
+                <iframe class="narrow-dashboard" src="http://10.9.9.152:3000/d-solo/dd812a84-7a77-4e6b-b5ea-fe390a9181d1/water-meter?orgId=1&from=1715644160389&panelId=6" height="200" frameborder="0"></iframe>
+            </div>
+            <div class="dashboard-container">
+                <iframe class="narrow-dashboard" src="http://10.9.9.152:3000/d-solo/dd812a84-7a77-4e6b-b5ea-fe390a9181d1/water-meter?orgId=1&from=1715644178990&panelId=8" height="200" frameborder="0"></iframe>
+            </div>
+            <div class="dashboard-container">
+                <iframe class="narrow-dashboard" src="http://10.9.9.152:3000/d-solo/dd812a84-7a77-4e6b-b5ea-fe390a9181d1/water-meter?orgId=1&from=1715643952006 &panelId=7" height="200" frameborder="0"></iframe>
+            </div>
+        </div>
+        
+        <div class="dashboard-container wide-dashboard">
+            <iframe class="wide-dashboard" src="http://10.9.9.152:3000/d-solo/dd812a84-7a77-4e6b-b5ea-fe390a9181d1/water-meter?orgId=1&from=1714736319563&panelId=1" height="400" frameborder="0"></iframe>
+        </div>
+    </div>
+    <div class="card">
+        <table class="custom-table">
+            <thead>
+              <tr>
+                <th scope="col">Totalizer (L)</th>
+                <th scope="col">Battery Voltage</th>
+                <th scope="col">Tamper Status</th>
+                <th scope="col">Flow Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for point in combined_points %}
+              <tr>
+                <td>{{ point.totalizer }}</td>
+                <td>{{ point.battery }}</td>
+                <td>{{ point.tamper }}</td>
+                <td>{{ point.flow }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+        </table> 
+    </div>  
+</body>
+</html>

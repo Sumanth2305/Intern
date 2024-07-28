@@ -1,0 +1,66 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTDS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .card {
+            width: 400px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .card-title {
+            margin-bottom: 20px;
+        }
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .button {
+            display: inline-block;
+            width: 325px; 
+            padding: 10px;
+            margin: 10px;
+            background-color: #f0f0f0;
+            color: #007bff;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .button:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-title">
+            <span style="color: purple; font-weight: 780; font-size: 30px; font-family:Arial;">DTDS</span>
+        </div>
+        <div class="button-container">
+            <a href="http://127.0.0.1:5000/region_slc" class="button">SLC Devices</a>
+            <a href="http://127.0.0.1:5000/region_TS" class="button">Temperature Sensor</a>
+            <a href="http://127.0.0.1:5000/region" class="button">Water Meter</a>
+        </div>
+    </div>
+</body>
+</html>
+
+

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTDS SLC Devices</title>
+    <style>
+        .card {
+            width: 90%;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            position: relative;
+            padding-bottom: 50px; 
+            margin-bottom: 30px;
+        }
+        .card-table{
+            margin: top 30px;
+        }
+        .dashboard-container {
+            margin-bottom: 20px;
+        }
+        .dashboard-container iframe {
+            width: 200px; 
+            height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .card-header {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .switch-container {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .switch {
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {display:none;}
+        .slider {
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        .counter {
+            margin-right: 10px;
+        }
+        .back-button {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            text-decoration: none;
+            color: purple;
+            font-weight: 780;
+            font-size: 20px;
+            font-family: Arial;
+        }
+        .back-button.square-button {
+            padding: 5px 10px;
+            background-color: #ffffff;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .custom-table th,
+        .custom-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .custom-table th {
+            background-color: white;
+        }
+
+
+
+    </style>
+</head>
+<body style="background-color: #f0f0f0;">
+    <a href="http://127.0.0.1:5000/device_slc" class="back-button square-button">&#9664;</a>
+    <span style="color: purple; font-weight: 780; font-size: 30px; font-family: Arial; margin-left: 50px;">DTDS</span>
+    <div class="card">
+        <div class="card-header">
+            SLC Device 1
+        </div>
+        <div class="dashboard-container">
+            <iframe src="http://10.9.9.152:3000/d-solo/ec210ca3-36f8-4436-81bd-5ca0c074beb3/slc-dtds?orgId=1&panelId=6&refresh=5s" width="450" height="200" frameborder="0"></iframe>
+        </div>
+        <div class="dashboard-container">
+            <iframe src="http://10.9.9.152:3000/d-solo/ec210ca3-36f8-4436-81bd-5ca0c074beb3/slc-dtds?orgId=1&panelId=5&refresh=5s" width="450" height="200" frameborder="0"></iframe>
+        </div>
+        <div class="dashboard-container">
+            <iframe src="http://10.9.9.152:3000/d-solo/ec210ca3-36f8-4436-81bd-5ca0c074beb3/slc-dtds?orgId=1&panelId=7&refresh=5s" width="450" height="200" frameborder="0"></iframe>
+        </div>
+        <div class="dashboard-container">
+            <iframe src="http://10.9.9.152:3000/d-solo/ec210ca3-36f8-4436-81bd-5ca0c074beb3/slc-dtds?orgId=1&panelId=3&refresh=5s" width="450" height="200" frameborder="0"></iframe>
+        </div>
+        <div class="dashboard-container">
+            <iframe src="http://10.9.9.152:3000/d-solo/ec210ca3-36f8-4436-81bd-5ca0c074beb3/slc-dtds?orgId=1&panelId=2" width="450" height="200" frameborder="0"></iframe>
+        </div>
+        <div class="dashboard-container">
+            <iframe src="http://10.9.9.152:3000/d-solo/ec210ca3-36f8-4436-81bd-5ca0c074beb3/slc-dtds?orgId=1&panelId=4&refresh=5s" width="450" height="200" frameborder="0"></iframe>
+        </div>
+        <div class="switch-container">
+            <p class="counter" id="downlink-counter">Downlink sent: 0 times</p>
+            <label class="switch">
+                <input type="checkbox" id="toggleSwitch">
+                <span class="slider round"></span>
+            </label>
+            <p id="status">OFF</p>
+        </div>
+    
+        <form id="downlinkForm" action="/index" method="POST" style="display: none;">
+            <input type="hidden" id="stateInput" name="state" value="0">
+        </form>
+    
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var downlinkCounter = 0;
+        
+                $('#toggleSwitch').change(function() {
+                    var isChecked = $(this).is(":checked");
+                    if (isChecked) {
+                        $('#status').text('ON'); 
+                    } else {
+                        $('#status').text('OFF');
+                    }
+        
+                    $.post('/index', {'state': isChecked ? 1 : 0}, function(response) {
+                        console.log(response);
+                        downlinkCounter++;
+                        // Update the counter value on the page
+                        $('#downlink-counter').text('Downlink sent: ' + downlinkCounter + ' times');
+                    });
+                });
+            });
+        </script>
+    </div>
+    <div class="card">
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th scope="col">Frequency (Hz)</th>
+                    <th scope="col">Energy (kWH)</th>
+                    <th scope="col">Current (A)</th>
+                    <th scope="col">Voltage (Volts)</th>
+                    <th scope="col">Power Factor</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for point in combined_points %}
+                <tr>
+                    <td>{{ point['frequency'] }}</td>
+                    <td>{{ point['energy'] }}</td>
+                    <td>{{ point['current'] }}</td>
+                    <td>{{ point['voltage'] }}</td>
+                    <td>{{ point['power_factor'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
